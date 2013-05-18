@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Introductioin to Erlang</title>
+
+		<meta name="description" content="">
+		<meta name="author" content="Vitali Monastyrjow" >
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Introduction to Erlang</h1>
+					<h2>Vitali Monastyrjow</h2>
+				</section>
+				<section>
+					<section>
+						<h2>What is Erlang?</h2>
+						<p class="fragment">Erlang is a 
+						<strong class="fragment">functional, </strong> 
+						<strong class="fragment">concurrency-oriented, </strong>
+						<strong class="fragment">distributive, </strong>
+						<strong class="fragment">fault-tolerant </strong>
+						programming language.
+						</p>
+					</section>
+				</section>
+				<section>
+					<section><h2>History of Erlang</h2>
+<img src="img/erlang.png">
+</section>
+					<section>
+						<h3>1982-1987</h3>
+						<p class="fragment">Experiments with programming of telecom using > 20 different languages.</p>
+						<strong class="fragment">Conclusion:</strong>
+						<p class="fragment">We must therefore develop our own language with the desirable features of Lisp, Prolog and Parlog, but with concurrency and error recovery built into the language.</p>
+					</section>
+					<section>
+						<h3>1987-1990</h3>
+						<p class="fragment">The first experiments with Erlang.</p>
+						<p class="fragment">Erlang is presented at ISS'90</p>
+					</section>
+					<section>
+						<h3>1990-1998</h3>
+						<p class="fragment">Erlang ported to VxWorks, PC, Mac.</p>
+						<p class="fragment">Distribution is added</p>
+						<p class="fragment">OTP (Open Telecom Platform) started</p>
+					</section>
+					<section>
+						<h3>1998-</h3>
+						<p class="fragment">Erlang banned in Ericsson, decided to focus on C++</p>
+						<p class="fragment">Open source</p>
+						<p class="fragment">Erlang solutions was born</p>
+						<p class="fragment">Ericsson returned to Erlang</p>
+					</section>
+				</section>
+				<section>
+					<section><h2>Functional</h2></section>
+					<section>
+						<h3>Periods, Commas, Semicolons</h3>
+						<ul>
+							<li>Priods end everything exept when</li>
+							<li>Semicolons end clauses</li>
+							<li>and Commas separate expressions.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Numbers</h3>
+<table width="80%"><tr><td width="100%" valign="top">
+						<pre><code data-trim>
+1> 10 + 5.
+15
+2> -234 + 4.
+230
+3> 16#AE.
+174
+4> 2#101010.
+42
+5> $A.
+65
+6> 17.368.
+7> 12.34E-10. 
+						</code></pre>
+</td></tr></table>
+
+					</section>
+					<section>
+						<h3>Atoms</h3>
+<table width="80%"><tr><td width="100%" valign="top">
+						<pre><code data-trim>
+1> atom.
+atom
+2> atoms_rule.
+atoms_rule
+3> atoms_rule@erlang.
+atoms_rule@erlang
+4> 'Atoms can be cheated!'.
+'Atoms can be cheated!'
+5> atom = 'atom'.
+atom
+						</code></pre>
+</td></tr></table>
+
+					</section>
+					<section>
+						<h3>Variables</h3>
+<table width="80%"><tr><td width="100%" valign="top">
+						<pre><code data-trim>
+1> Abc = 50.
+50
+2> A_long_variable_name = the_atom.
+the_atom
+3> AnObjectOrientatedVariableName = 'There are no objects in Erlang'.
+'There are no objects in Erlang'
+						</code></pre>
+</td></tr></table>
+<ul>
+<li>Start with an Upper Case Letter.</li>
+<li>No "funny characters".</li>
+<li>Variables are used to store values of data structures.</li>
+<li>Variables can only be bound once! The value of a variable can never be changed once it has been set (bound).</li>
+</ul>
+
+					</section>
+					<section>
+						<h3>Tuples</h3>
+<table width="80%"><tr><td width="100%" valign="top">
+						<pre><code>
+Point = {4,5}.
+PreciseTemperature = {celsius, 23.213}.
+{person, 'Joe', 'Armstrong'}
+{abc, {def, 123}, jkl}
+{}
+						</code></pre>
+</td></tr></table>
+<ul>
+<li>Used to store a fixed number of items.</li>
+<li>Tuples of any size are allowed.</li>
+</ul>
+
+					</section>
+
+					<section>
+						<h3>Lists</h3>
+<table width="80%"><tr><td width="100%" valign="top">
+						<pre><code>
+[123, xyz].
+[123, def, abc].
+[{person, 'Joe', 'Armstrong'},
+.. {person, 'Robert', 'Virding'},
+.. {person, 'Mike', 'Williams'}
+.. ].
+"abcdefghi"
+  %becomes - [97,98,99,100,101,102,103,104,105]
+""
+  %becomes - []						</code></pre>
+</td></tr></table>
+<ul>
+<li>Used to store a variable number of items.</li>
+<li>Lists are dynamically sized.</li>
+<li>"..." is short for the list of integers representing the ascii character codes of the enclosed within the quotes.</li>
+</ul>
+					</section>
+					<section>
+						<h3>List processing</h3>
+<table width="80%"><tr><td width="100%" valign="top">
+						<pre><code data-trim>
+1> List = [2,3,4].
+[2,3,4]
+2> NewList = [1|List].
+[1,2,3,4]						
+3> [Head|Tail] = NewList.
+[1,2,3,4]
+4> Head.
+1
+5> Tail.
+[2,3,4]
+6> [NewHead|NewTail] = Tail.
+[2,3,4]
+7> NewHead.
+2
+</code></pre>
+</td></tr></table>
+					</section>
+					<section>
+						<h3>Complex Data Structures</h3>
+<table width="80%"><tr><td width="100%" valign="top">
+						<pre><code data-trim>
+[{{person,'Joe', 'Armstrong'},
+		{telephoneNumber, [3,5,9,7]},
+		{shoeSize, 42},
+		{pets, [{cat, tubby},{cat, tiger}]},
+		{children,[{thomas, 5},{claire,1}]}}
+]
+
+</code></pre>
+</td><td></td></tr></table>
+<ul>
+<li>Arbitrary complex structures can be created.
+<li>Data structures may contain bound variables.
+</ul>
+					</section>
+					<section>
+						<h3>Pattern Matching</h3>
+
+<pre><code data-trim>
+greet(male, Name) ->
+	io:format("Hello, Mr. ~s!", [Name]);
+greet(female, Name) ->
+	io:format("Hello, Mrs. ~s!", [Name]);
+greet(_, Name) ->
+	io:format("Hello, ~s!", [Name]).						
+	
+{B, C, D} = {10, foo, bar}
+  Succeeds - binds B to 10, C to foo and D 
+  to bar
+{A, A, B} = {abc, abc, foo}
+  Succeeds - binds A to abc, B to foo
+{A, A, B} = {abc, def, 123}
+  Fails
+</code></pre>
+					</section>
+				<section>
+<h3>Function Calls</h3>
+<pre><code>
+	module:func(Arg1, Arg2, ... Argn)
+	
+	func(Arg1, Arg2, .. Argn)
+	</code></pre>
+	<ul>
+<li>Arg1 .. Argn are any Erlang data structures.
+<li>The function and module names (func and module in the above) must be atoms.
+<li>A function can have zero arguments. (e.g. date() - returns the current date).
+<li>Functions are defined within Modules.
+<li>Functions must be exported before they can be called from outside the module where they are defined.
+</ul>
+				</section>
+<section>
+						<h3>Module System</h3>
+						<pre><code>
+-module(demo).
+-export([double/1]).
+	
+double(X) ->
+	times(X, 2).
+	
+times(X, N) ->
+	X * N.
+</code></pre>
+<ul>
+<li>double can be called from outside the module, times is local to the module.
+<li>double/1 means the function double with one argument (Note that double/1 and double/2 are two different functions).
+</ul>
+</section>
+<section>
+	<h3>Function Syntax</h3>
+<pre><code>
+func(Pattern1, Pattern2, ...) ->
+		... ;
+func(Pattern1, Pattern2, ...) ->
+		... ;
+func(Pattern1, Pattern2, ...) ->
+		... .</code></pre>
+<ul>
+<li>Clauses are scanned sequentially until a match is found.
+<li>When a match is found all variables occurring in the head become bound.
+<li>Variables are local to each clause, and are allocated and deallocated automatically.
+<li>The body is evaluated sequentially.
+</ul>
+</section>
+<section>
+	<h3>Function Syntax Example</h3>
+<pre><code data-trim>
+-module(mathStuff).
+-export([factorial/1, area/1]).
+	
+factorial(0) -> 1;
+factorial(N) -> N * factorial(N-1).
+	
+area({square, Side}) ->
+	Side * Side;
+area({circle, Radius}) ->
+	3.1415 * Radius * Radius;
+area({triangle, A, B, C}) ->
+	S = (A + B + C)/2,
+	math:sqrt(S*(S-A)*(S-B)*(S-C));
+area(Other) ->
+	{invalid_object, Other}.		
+	... .</code></pre>
+</section>
+<section>
+	<h3>Built In Functions (BIFs)</h3>
+<pre><code>
+date()
+time()
+length([1,2,3,4,5])
+size({a,b,c})
+atom_to_list(an_atom)
+list_to_tuple([1,2,3,4])
+integer_to_list(2234)
+tuple_to_list({})
+</code></pre>
+<ul>
+<li>Are in the module erlang.
+<li>Do what you cannot do (or is difficult to do) in Erlang.
+<li>Modify the behaviour of the system.
+<li>Described in the BIFs manual.
+</ul>
+</section>
+<section>
+	<h3>Guarded Function Clauses</h3>
+<pre><code>
+factorial(0) -> 1;
+factorial(N) when N > 0 ->
+	N * factorial(N - 1).
+</code></pre>
+<ul>
+<li>The reserved word when introduces a guard.
+<li>Fully guarded clauses can be re-ordered.
+</ul>
+<pre><code>
+factorial(N) when N > 0 ->
+		N * factorial(N - 1);
+factorial(0) -> 1.
+</code></pre>
+<ul>
+<li>This is NOT the same as:
+</ul>
+<pre><code>
+factorial(N) ->
+		N * factorial(N - 1);
+factorial(0) -> 1.
+</code></pre>
+
+</section>
+<section>
+	<h3>Examples of Guards</h3>
+<pre><code>
+number(X)	% X is a number
+integer(X)	% X is an integer
+float(X)	% X is a float
+atom(X)		% X is an atom
+tuple(X)	% X is a tuple
+list(X)		% X is a list
+	
+length(X) == 3	% X is a list of length 3
+size(X) == 2	% X is a tuple of size 2.
+	
+X > Y + Z	% X is > Y + Z
+X == Y		% X is equal to Y
+X =:= Y		% X is exactly equal to Y
+                %     (i.e. 1 == 1.0 succeeds but 
+		%     1 =:= 1.0 fails)</code></pre>
+<ul>
+<li>All variables in a guard must be bound.
+<li>See the User Guide for a full list of guards and allowed function calls.
+</ul>
+</section>
+<section>
+	<h3>Traversing Lists</h3>
+<pre><code data-trim>
+average(X) -> sum(X) / len(X).
+	
+sum([H|T]) -> H + sum(T);
+sum([]) -> 0.
+	
+len([_|T]) -> 1 + len(T);
+len([]) -> 0.
+</code></pre>
+
+<p>Note the pattern of recursion is the same in both cases. This pattern is very common.</p>
+<strong>Two other common patterns:</strong>
+<pre><code data-trim>
+double([H|T]) -> [2*H|double(T)];
+double([]) -> [].
+	
+member(H, [H|_]) -> true;
+member(H, [_|T]) -> member(H, T);
+member(_, []) -> false.</code></pre>
+
+</section>
+<section>
+	<h3>Special Forms</h3>
+<pre><code data-trim>
+case lists:member(a, X) of
+	true ->
+		... ;
+	false -> 
+		...
+end,
+...
+	
+if
+	integer(X) -> ... ;
+	tuple(X) -> ... 
+end,
+...
+</code></pre>
+
+<p>Not really needed - but useful.</p>
+</section>
+				</section>
+				<section>
+					<section><h2>Concurrency-oriented</h2></section>
+					<section>
+						<h3>Concurrency Oriented Programming</h3>
+						<ul>
+							<li>The world IS concurrent.</li>
+							<li>It IS parallel.</li>
+							<li>I have my private memory (in my head) and you have yours. It is NOT shared. We communicate by passing messages (sound and light waves). We update our private state based on the reception of these messages.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Concurrency vs Parallelism</h3>
+						<ul>
+							<li>Concurrency refers to the idea of having many actors running independently, but not necessarily all at the same time</li>
+							<li>Parallelism is having actors running exactly at the same time.</li>
+							<li>An interesting fact is that because Erlang concurrency is all about isolated processes, it took no conceptual change at the language level to bring true parallelism to the language.All the changes were transparently done in the VM, away from the eyes of the programmers.(SMP)</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Processes</h3>
+						<ul>
+							<li>Processes belong to Erlang and not the operating system</li>
+							<li>Create a process is cheap (a newly spawned Erlang process uses 309 words of memory[no smp vm])</li>
+							<li>We can have a large numbe of processes(default max = 32768, can be raised up to 268435456). 
+							Erlang processes use dynamically allocated stacks, which start very small and grow as necessary. 
+							</li>
+							<li>Each process (in the standard runtime system) has its own 
+heap, which is individually garbage collected.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Processes continuation</h3>
+						<ul>
+							<li>Switching between processes is cheap.(lightweight cooperative threading model) 
+							They only switch at known, controlled points and therefore don't have to save the entire CPU state </li>
+							<li>Processes share no memory and are completely independent</li>
+							<li>The only way for processes to interact is through message passing</li>
+							<li>Message sending is asynchronous and safe, the message is guaranteed to eventually reach the recipient, provided that the recipient exists.</li>
+							<li>If there is a live process and you send it message A and then message B, it's guaranteed that if message B arrived, message A arrived before it.</li>
+						</ul>
+					</section>
+<section>
+						<h3>Processes in Action</h3>
+<pre><code data-trim>
+-module(dolphins).
+-compile(export_all).
+ 
+cool_one() ->
+  receive
+    do_a_flip ->
+      io:format("How about no?~n");
+    fish ->
+      io:format("So long and thanks for all the fish!~n");
+    _ ->
+      io:format("Heh, we're smarter than you humans.~n")
+  end.
+</code></pre>
+<pre><code data-trim>
+1> Dolphin = spawn(dolphins, cool_one, []).
+<0.40.0>
+2> Dolphin ! "oh, hello dolphin!".
+Heh, we're smarter than you humans.
+"oh, hello dolphin!"
+3> Dolphin ! fish.               
+fish
+15></code></pre>
+</section>
+<section>
+						<h3>Processes in Action continuation</h3>
+<pre><code data-trim>
+-module(dolphins).
+-compile(export_all).
+ 
+cool_two() ->
+  receive
+    do_a_flip ->
+      io:format("How about no?~n"),
+      cool_two();
+    fish ->
+      io:format("So long and thanks for all the fish!~n");
+    _ ->
+      io:format("Heh, we're smarter than you humans.~n"),
+      cool_two()
+  end.
+</code></pre>
+</section>
+<section>
+<h3>State Your State</h3>
+<pre><code data-trim>
+fridge(FoodList) ->
+  receive
+    {From, {store, Food}} ->
+      From ! {self(), ok},
+      fridge([Food|FoodList]);
+    {From, {take, Food}} ->
+      case lists:member(Food, FoodList) of
+        true ->
+          From ! {self(), {ok, Food}},
+          fridge(lists:delete(Food, FoodList));
+        false ->
+          From ! {self(), not_found},
+          fridge(FoodList)
+      end;
+    terminate ->
+      ok
+end.</code></pre>
+</section>
+<section>
+<h3>Messages API</h3>
+<pre><code data-trim>
+start(FoodList) ->
+  spawn(?MODULE, fridge, [FoodList]).
+
+store(Pid, Food) ->
+  Pid ! {self(), {store, Food}},
+  receive
+    {Pid, Msg} -> Msg
+  end.
+ 
+take(Pid, Food) ->
+  Pid ! {self(), {take, Food}},
+  receive
+    {Pid, Msg} -> Msg
+  end.</code></pre>
+</section>
+<section>
+<h3>Time Out</h3>
+<pre><code data-trim>
+store2(Pid, Food) ->
+  Pid ! {self(), {store, Food}},
+  receive
+    {Pid, Msg} -> Msg
+  after 3000 ->
+    timeout
+  end.
+ 
+take2(Pid, Food) ->
+  Pid ! {self(), {take, Food}},
+  receive
+    {Pid, Msg} -> Msg
+  after 3000 ->
+    timeout
+  end.</code></pre>
+</section>
+<section>
+<h3>Process registration</h3>
+<ul>
+	<li>Allows process naming</li>
+	<li>Frees application from passing Pids around</li>
+<pre><code data-trim>
+register(my_process, Pid).
+
+my_process ! Message.
+</code></pre>
+
+</ul>
+</section>
+				</section>
+
+				<section>
+					<section><h2>Fault-tolerant</h2></section>
+					<section>
+						<h3>Let it crash</h3>
+						<ul>
+							<li>This is the coding philosophy of Erlang.</li>
+							<li>Not like a plane with dozens of passengers dying, but more like a tightrope walker with a safety net under him. While you should avoid making mistakes, you won't need to check for every type or error condition in most cases.</li>
+							<li>If there are any errors, the process is automatically terminated, and this is reported to any processes that were monitoring the crashed process.</li>
+							<li>The monitoring process can then restart the process or take other action.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Process Termination</h3>
+						<ul>
+							<li>When a process terminates, it always terminates with an exit reason. The reason may be any term.</li>
+							<li>A process is said to terminate normally, if the exit reason is the atom normal. A process with no more code to execute terminates normally.</li>
+							<li>A process terminates with exit reason {Reason,Stack} when a run-time error occurs.</li>
+							<li>A process can terminate itself by calling one of the BIFs exit(Reason), erlang:error(Reason), erlang:error(Reason, Args), erlang:fault(Reason) or erlang:fault(Reason, Args). </li>
+							<li>A process may also be terminated if it receives an exit signal with another exit reason than normal</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Links</h3>
+						<ul>
+							<li>A link is a specific kind of relationship that can be created between two processes.</li>
+							<li>When that relationship is set up and one of the processes dies from an unexpected throw, error or exit, the other linked process also dies.</li>
+							<li> if the process that has an error crashes but those that depend on it don't, then all these depending processes now have to deal with a dependency disappearing.</li>
+							<li> Letting them die and then restarting the whole group is usually an acceptable alternative.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Links in Action</h3>
+<pre><code data-trim>
+myproc() ->
+  timer:sleep(5000),
+  exit(reason).
+
+1> spawn_link(fun linkmon:myproc/0). %  done as an atomic operation
+<0.52.0>
+** exception error: reason
+</code>
+</pre>
+<p>Links can not be stacked. If you call link/1 15 times for the same two processes, only one link will still exist between them and a single call to unlink/1 will be enough to tear it down.</p>
+					</section>
+
+					<section>
+						<h3>It's a Trap!</h3>
+						<ul>
+							<li>In order to be reliable, an application needs to be able to both kill and restart a process quickly</li>
+							<li>In order to restart a process, we need a way to first know that it died.</li>
+							<li>This can be done by adding a layer on top of links (the delicious frosting on the cake) with a concept called system processes.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>System processes</h3>
+						<ul>
+							<li>System processes are basically normal processes, except they can convert exit signals to regular messages.</li>
+							<li>This is done by calling process_flag(trap_exit, true) in a running process.</li>
+						</ul>
+<pre><code data-trim
+1> process_flag(trap_exit, true).
+true
+2> spawn_link(fun() -> linkmon:myproc/0 end).
+<0.49.0>
+3> receive X -> X end.
+{'EXIT',<0.49.0>,reason}	
+</code>
+</pre>
+					</section>
+
+					<section>
+						<h3>Monitors</h3>
+						<ul>
+							<li>are a special type of link with two differences</li>
+							<li class="fragment">they are unidirectional</li>
+							<li class="fragment">they can be stacked</li>
+						</ul>
+<pre><code data-trim>
+1> erlang:monitor(process, spawn(fun() -> timer:sleep(500) end)).
+#Ref<0.0.0.77>
+2> flush().
+Shell got {'DOWN',#Ref<0.0.0.77>,process,<0.63.0>,normal}
+ok	
+</code>
+</pre>
+					</section>					
+				</section>
+				<section>				
+					<section><h2>Distributive</h2></section>
+					<section>
+						<h3>Distributed Erlang System</h3>
+						<ul>
+							<li>A distributed Erlang system consists of a number of Erlang runtime systems communicating with each other.</li>
+							<li>Each such runtime system is called a node. </li>
+<li>A node is an executing Erlang runtime system which has been given a name, using the command line flag -name (long names) or -sname (short names).</li>							
+							<li>Message passing between processes at different nodes, as well as links and monitors, are transparent when pids are used.</li>
+							<li>Registered names, however, are local to each node. This means the node must be specified as well when sending messages etc. using registered names.</li>
+							<li>The distribution mechanism is implemented using TCP/IP sockets.</li>
+						</ul>
+					</section>
+					<section><h3>Nodes and Nodes connections</h3>
+						<ul>
+							<li>The nodes are loosely connected. The first time the name of another node is used, for example if spawn(Node,M,F,A), a connection attempt to that node will be made.</li>
+							<li>Connections are by default transitive. If a node A connects to node B, and node B has a connection to node C, then node A will also try to connect to node C.</li>
+							<li>If a node goes down, all connections to that node are removed.erlang:disconnect_node(Node)</li>
+							<li>The list of (visible) nodes currently connected to is returned by nodes().</li>
+							<li>The Erlang Port Mapper Daemon epmd is automatically started at every host where an Erlang node is started. It is responsible for mapping the symbolic node names to machine addresses</li>
+						</ul>
+					</section>
+					<section><h3>Security</h3>
+						<ul>
+							<li>Each node has its own magic cookie, which is an Erlang atom.</li>
+							<li>When a nodes tries to connect to another node, the magic cookies are compared. If they do not match, the connected node rejects the connection.</li>
+							<li>For a node Node1 with magic cookie Cookie to be able to connect to, or accept a connection from, another node Node2 with a different cookie DiffCookie, the function erlang:set_cookie(Node2, DiffCookie) must first be called at Node1.</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+					<h2>OTP</h2>
+					<ul>
+						<li>OTP (Open Telecom Platform) is a large collection of libraries for Erlang. Most projects using "Erlang" are actually using "Erlang/OTP", i.e. the language and the libraries. OTP is also open source.</li>
+						
+					</ul>
+					</section>
+					<section>
+						<h3>Supervision Trees</h3>
+						<ul>
+							<li>A basic concept in Erlang/OTP is the supervision tree. This is a process structuring model based on the idea of workers and supervisors.</li>
+							<li>Workers are processes which perform computations, that is, they do the actual work.</li>
+							<li>Supervisors are processes which monitor the behaviour of workers. A supervisor can restart a worker if something goes wrong.</li>
+							<li>The supervision tree is a hierarchical arrangement of code into supervisors and workers</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Behaviours</h3>
+						<ul>
+							<li>In a supervision tree, many of the processes have similar structures, they follow similar patterns</li>
+							<li>For example, the supervisors are very similar in structure. The only difference between them is which child processes they supervise. </li>
+							<li>Also, many of the workers are servers in a server-client relation, finite state machines, or event handlers such as error loggers.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Behaviours continuation</h3>
+						<ul>
+							<li>The idea is to divide the code for a process in a generic part (a behaviour module) and a specific part (a callback module).</li>
+							<li>The behaviour module is part of Erlang/OTP. To implement a process such as a supervisor, the user only has to implement the callback module which should export a pre-defined set of functions, the callback functions.</li>
+							<li>The standard Erlang/OTP behaviours are:
+								<ul>
+<li>gen_server</li>
+<li>gen_fsm</li>
+<li>gen_event</li>
+<li>supervisor</li></ul></li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Applications</h3>
+						<ul>
+							<li>The application concept applies both to program structure (processes) and directory structure (modules).</li>
+							<li>The simplest kind of application does not have any processes, but consists of a collection of functional modules. Such an application is called a library application.</li>
+							<li>An application with processes is easiest implemented as a supervision tree using the standard behaviours.</li>
+						</ul>
+					</section>
+
+				</section>
+				<section>
+					<h2>Links</h2>
+					<ul>
+					  <li>www.erlang.org</li>
+					  <li>www.learnyousomeerlang.com</li>
+					  <li>www.amazon.com
+						<ul>
+						  <li>Programming Erlang(Software for concurrent world)</li>
+						  <li>OTP in Action</li>
+						</ul>
+					  </li>
+					</ul>
+				</section>
+
+				<section>
+					<h1>The End!</h1>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'page', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					//{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					//{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					//{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
