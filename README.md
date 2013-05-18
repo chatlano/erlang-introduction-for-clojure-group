@@ -1,2 +1,2 @@
-erlang-intruduction-for-clojure-group
+Presentation for Cologne Clojure User Group 
 =====================================
